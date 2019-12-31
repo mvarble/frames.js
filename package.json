@@ -1,6 +1,6 @@
 {
   "name": "@mvarble/frames.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A set of tools for working with coordinate systems in the plane.",
   "main": "index.js",
   "directories": {
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha --require @babel/register",
-    "build": "node build"
+    "build": "node webpack"
   },
   "repository": {
     "type": "git",
@@ -37,10 +37,14 @@
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "@babel/register": "^7.7.7",
+    "@cycle/run": "^5.4.0",
     "babel-loader": "^8.0.6",
+    "canvas": "^2.6.1",
     "chai": "^4.2.0",
     "chai-roughly": "^1.0.0",
+    "gifencoder": "^2.0.1",
     "mocha": "^6.2.2",
-    "webpack": "^4.41.4"
+    "webpack": "^4.41.4",
+    "xstream": "^11.11.0"
   }
 }

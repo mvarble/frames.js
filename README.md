@@ -5,7 +5,7 @@ A set of tools for working with coordinate systems in the plane.
 ## Download
 
 ```
-npm install frames
+npm install @mvarble/frames.js
 ```
 
 ## The Mathematics
@@ -47,7 +47,7 @@ Since our frames are encoded with simple JSON objects, the magic of the module i
 
 ## API
 
-Since this is a small package, one can look at the source code.
+Since this is a small package, one can look at the source code [here](https://github.com/mvarble/frames.js/blob/master/src.js).
 Otherwise, for the most part, there are only several functions which are very useful.
 
 ### Rigid-Body Transformations
@@ -71,5 +71,21 @@ The key distinction is that the coordinates of a vector in any frame should be i
 
 ## Examples
 
-The `./example.html` in the project repository will showcase how the three rigid-body transformations above behave.
-Consider [viewport.js]() for an example of how one can use this module for more interactive apps.
+### translatedFrame
+
+![translated self](https://github.com/mvarble/frames.js/blob/master/examples/translated-self.gif)
+![translated relative](https://github.com/mvarble/frames.js/blob/master/examples/translated-relative.gif)
+
+### rotatedFrame
+
+![rotated self](https://github.com/mvarble/frames.js/blob/master/examples/rotated-self.gif)
+![rotated relative](https://github.com/mvarble/frames.js/blob/master/examples/rotated-relative.gif)
+
+### scaledFrame
+
+![scaled self](https://github.com/mvarble/frames.js/blob/master/examples/scaled-self.gif)
+![scaled relative](https://github.com/mvarble/frames.js/blob/master/examples/scaled-relative.gif)
+
+### viewport.js
+
+Consider [viewport.js](https://github.com/mvarble/viewport.js) for an example of how one can use this module for more interactive apps.

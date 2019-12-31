@@ -1,5 +1,5 @@
 /**
- * src.js
+ * frames.js
  *
  * This is a module which exports functions corresponding to operating on 
  * `frames` which correspond to unist trees of matrices which can be 
@@ -211,7 +211,4 @@ const withRatio = (frame, ratio) => {
 export { withRatio };
 out = { ...out, withRatio };
 
-// this is here if we include it in the browser
-try {
-  window.frames = out;
-} catch (e) {}
+//export default out;

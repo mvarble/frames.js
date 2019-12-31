@@ -23,7 +23,7 @@ import {
   translatedFrame,
   rotatedFrame,
   scaledFrame,
-} from './src';
+} from './index';
 import visit from 'unist-util-visit';
 import cloneDeep from 'lodash/cloneDeep';
 
