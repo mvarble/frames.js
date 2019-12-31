@@ -73,15 +73,21 @@ The key distinction is that the coordinates of a vector in any frame should be i
 
 ### translatedFrame
 
+The following shows the red frame being translated at a constant velocity of [3, 4] units/second with respect to different coordinate systems.
+
 ![translated self](https://github.com/mvarble/frames.js/blob/master/examples/translated-self.gif)
 ![translated relative](https://github.com/mvarble/frames.js/blob/master/examples/translated-relative.gif)
 
 ### rotatedFrame
 
+The following shows the red frame being rotated at a angular velocity of 2pi radians/second with respect to different coordinate systems.
+
 ![rotated self](https://github.com/mvarble/frames.js/blob/master/examples/rotated-self.gif)
 ![rotated relative](https://github.com/mvarble/frames.js/blob/master/examples/rotated-relative.gif)
 
 ### scaledFrame
+
+The following shows the red frame being scaled with respect to different coordinate systems.
 
 ![scaled self](https://github.com/mvarble/frames.js/blob/master/examples/scaled-self.gif)
 ![scaled relative](https://github.com/mvarble/frames.js/blob/master/examples/scaled-relative.gif)
