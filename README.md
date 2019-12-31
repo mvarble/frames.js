@@ -66,7 +66,7 @@ The key distinction is that the coordinates of a vector in any frame should be i
 
 - **locFrameTrans(loc, frame1, frame2)**: This will return a pair `[a, b]` corresponding to the `frame2`-coordinates of the location with `frame1`-coordinates `[loc[0], loc[1]]`.
 - **locsFrameTrans(locs, frame1, frame2)**: This will simply run `locs.map(loc => locFrameTrans(loc, frame1, frame2))`. I am not savy enough with javascript to bootstrap this into a single function.
-- **vecFrameTrans(vec, frame1, frame2)**: This will return a pair `[a, b]` corresponding to the `frame2`-coordinates of the vector with `frame1`-coordinates `[vec[0], vec[1]]`. This is different from **locFramTrans**, as we consider vectors independent of the origin of the frame.
+- **vecFrameTrans(vec, frame1, frame2)**: This will return a pair `[a, b]` corresponding to the `frame2`-coordinates of the vector with `frame1`-coordinates `[vec[0], vec[1]]`. This is different from **locFrameTrans**, as we consider vectors independent of the origin of the frame.
 - **vecsFrameTrans(vecs, frame1, frame2)**: This will simply run `vecs.map(vec => vecFrameTrans(vec, frame1, frame2))`. I am not savy enough with javascript to bootstrap this into a single function.
 
 ## Examples
