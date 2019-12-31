@@ -54,9 +54,48 @@ Otherwise, for the most part, there are only several functions which are very us
 
 If one would like to return a translated/rotated/scaled version of a frame, it is as simple as using the following functions.
 
-- **translatedFrame(frame, disp [, relativeFrame])**: This will return a frame which corresponds to translating `frame` by `[disp[0], disp[1]]` in the coordinate system of `relativeFrame`. The `relativeFrame` will be `frame` if not provided.
-- **rotatedFrame(frame, theta, [, relativeFrame])**: This will return a frame which corresponds to rotating `frame` by `theta` in the coordinate system of `relativeFrame`. **Note.** `relativeFrame` should have an orthogonal basis with both vectors having the same length in order for this to make sense. The `relativeFrame` will be `frame` if not provided.
-- **scaledFrame(frame, scales, [, relativeFrame])**: This will return a frame which corresponds to scaling `frame` by `[scales[0], scales[1]]` in the coordinate system of `relativeFrame`. The `relativeFrame` will be `frame` if not provided.
+#### translatedFrame
+
+```js
+newFrame = translatedFrame(frame, disp [, relativeFrame])
+```
+
+This will return a frame which corresponds to translating `frame` by `[disp[0], disp[1]]` in the coordinate system of `relativeFrame`. 
+The `relativeFrame` will be `frame` if not provided.
+The following shows the red frame being translated at a constant velocity of [3, 4] units/second with respect to different coordinate systems.
+The first is `translatedFrame(redFrame, [t*3, t*4])` while the second is `translatedFrame(redFrame, [t*3, t*4], greenFrame)` with respect to time `t`.
+
+![translated self](https://github.com/mvarble/frames.js/blob/master/examples/translated-self.gif)
+![translated relative](https://github.com/mvarble/frames.js/blob/master/examples/translated-relative.gif)
+
+#### rotatedFrame
+
+```js
+newFrame = rotatedFrame(frame, theta, [, relativeFrame])
+```
+
+This will return a frame which corresponds to rotating `frame` by `theta` in the coordinate system of `relativeFrame`. 
+**Note.** `relativeFrame` should have an orthogonal basis with both vectors having the same length in order for this to make sense. The `relativeFrame` will be `frame` if not provided.
+The following shows the red frame being rotated at a angular velocity of 2pi radians/second with respect to different coordinate systems.
+The first is `rotatedFrame(redFrame, 2 * Math.PI * t)` while the second is `rotatedFrame(redFrame, 2 * Math.PI * t, greenFrame)` with respect to time `t`.
+
+![rotated self](https://github.com/mvarble/frames.js/blob/master/examples/rotated-self.gif)
+![rotated relative](https://github.com/mvarble/frames.js/blob/master/examples/rotated-relative.gif)
+
+
+#### scaledFrame
+
+```js
+newFrame = scaledFrame(frame, scales, [, relativeFrame])
+```
+
+This will return a frame which corresponds to scaling `frame` by `[scales[0], scales[1]]` in the coordinate system of `relativeFrame`. The `relativeFrame` will be `frame` if not provided.
+The following shows the red frame being scaled with respect to different coordinate systems.
+The first is `scaledFrame(redFrame, [0.9 * (1 - t), 0.9 * (1 - t)])` while the second is `scaledFrame(redFrame, [0.9 * (1 - t), 0.9 * (1 - t)], greenFrame)` with respect to time `t`.
+
+![scaled self](https://github.com/mvarble/frames.js/blob/master/examples/scaled-self.gif)
+![scaled relative](https://github.com/mvarble/frames.js/blob/master/examples/scaled-relative.gif)
+
 
 ### Locations/Vectors in Different Frames
 
@@ -64,34 +103,41 @@ A *location* is considered to be a point in the plane.
 A *vector* is considered to be a displacement in the plane.
 The key distinction is that the coordinates of a vector in any frame should be independent of the frame's position in the plane.
 
-- **locFrameTrans(loc, frame1, frame2)**: This will return a pair `[a, b]` corresponding to the `frame2`-coordinates of the location with `frame1`-coordinates `[loc[0], loc[1]]`.
-- **locsFrameTrans(locs, frame1, frame2)**: This will simply run `locs.map(loc => locFrameTrans(loc, frame1, frame2))`. I am not savy enough with javascript to bootstrap this into a single function.
-- **vecFrameTrans(vec, frame1, frame2)**: This will return a pair `[a, b]` corresponding to the `frame2`-coordinates of the vector with `frame1`-coordinates `[vec[0], vec[1]]`. This is different from **locFrameTrans**, as we consider vectors independent of the origin of the frame.
-- **vecsFrameTrans(vecs, frame1, frame2)**: This will simply run `vecs.map(vec => vecFrameTrans(vec, frame1, frame2))`. I am not savy enough with javascript to bootstrap this into a single function.
+#### locFrameTrans
+
+```js
+sameLoc = locFrameTrans(loc, frame1, frame2)
+```
+
+This will return a pair `[a, b]` corresponding to the `frame2`-coordinates of the location with `frame1`-coordinates `[loc[0], loc[1]]`.
+
+#### locsFrameTrans
+
+```js
+sameLocs = locsFrameTrans(locs, frame1, frame2)
+```
+
+This will simply run `locs.map(loc => locFrameTrans(loc, frame1, frame2))`. 
+I am not savy enough with javascript to bootstrap this into a single function.
+
+#### vecFrameTrans
+
+```js
+sameVec = vecFrameTrans(vec, frame1, frame2)
+```
+
+This will return a pair `[a, b]` corresponding to the `frame2`-coordinates of the vector with `frame1`-coordinates `[vec[0], vec[1]]`. 
+This is different from **locFrameTrans**, as we consider vectors independent of the origin of the frame.
+
+#### vecsFrameTrans
+
+```js
+vecsFrameTrans(vecs, frame1, frame2)
+```
+
+This will simply run `vecs.map(vec => vecFrameTrans(vec, frame1, frame2))`. 
+I am not savy enough with javascript to bootstrap this into a single function.
 
 ## Examples
 
-### translatedFrame
-
-The following shows the red frame being translated at a constant velocity of [3, 4] units/second with respect to different coordinate systems.
-
-![translated self](https://github.com/mvarble/frames.js/blob/master/examples/translated-self.gif)
-![translated relative](https://github.com/mvarble/frames.js/blob/master/examples/translated-relative.gif)
-
-### rotatedFrame
-
-The following shows the red frame being rotated at a angular velocity of 2pi radians/second with respect to different coordinate systems.
-
-![rotated self](https://github.com/mvarble/frames.js/blob/master/examples/rotated-self.gif)
-![rotated relative](https://github.com/mvarble/frames.js/blob/master/examples/rotated-relative.gif)
-
-### scaledFrame
-
-The following shows the red frame being scaled with respect to different coordinate systems.
-
-![scaled self](https://github.com/mvarble/frames.js/blob/master/examples/scaled-self.gif)
-![scaled relative](https://github.com/mvarble/frames.js/blob/master/examples/scaled-relative.gif)
-
-### viewport.js
-
-Consider [viewport.js](https://github.com/mvarble/viewport.js) for an example of how one can use this module for more interactive apps.
+- [viewport.js](https://github.com/mvarble/viewport.js): an example of how one can use this module for more interactive apps.
