@@ -132,7 +132,7 @@ This is different from **locFrameTrans**, as we consider vectors independent of 
 #### vecsFrameTrans
 
 ```js
-vecsFrameTrans(vecs, frame1, frame2)
+sameVecs = vecsFrameTrans(vecs, frame1, frame2)
 ```
 
 This will simply run `vecs.map(vec => vecFrameTrans(vec, frame1, frame2))`. 
