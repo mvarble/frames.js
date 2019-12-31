@@ -65,8 +65,8 @@ The `relativeFrame` will be `frame` if not provided.
 The following shows the red frame being translated at a constant velocity of [3, 4] units/second with respect to different coordinate systems.
 The first is `translatedFrame(redFrame, [t*3, t*4])` while the second is `translatedFrame(redFrame, [t*3, t*4], greenFrame)` with respect to time `t`.
 
-![translated self](https://github.com/mvarble/frames.js/blob/master/examples/translated-self.gif)
-![translated relative](https://github.com/mvarble/frames.js/blob/master/examples/translated-relative.gif)
+![translated self](https://raw.githubusercontent.com/mvarble/frames.js/master/examples/translated-self.gif)
+![translated relative](https://raw.githubusercontent.com/mvarble/frames.js/master/examples/translated-relative.gif)
 
 #### rotatedFrame
 
@@ -79,8 +79,8 @@ This will return a frame which corresponds to rotating `frame` by `theta` in the
 The following shows the red frame being rotated at a angular velocity of 2pi radians/second with respect to different coordinate systems.
 The first is `rotatedFrame(redFrame, 2 * Math.PI * t)` while the second is `rotatedFrame(redFrame, 2 * Math.PI * t, greenFrame)` with respect to time `t`.
 
-![rotated self](https://github.com/mvarble/frames.js/blob/master/examples/rotated-self.gif)
-![rotated relative](https://github.com/mvarble/frames.js/blob/master/examples/rotated-relative.gif)
+![rotated self](https://raw.githubusercontent.com/mvarble/frames.js/master/examples/rotated-self.gif)
+![rotated relative](https://raw.githubusercontent.com/mvarble/frames.js/master/examples/rotated-relative.gif)
 
 
 #### scaledFrame
@@ -93,8 +93,8 @@ This will return a frame which corresponds to scaling `frame` by `[scales[0], sc
 The following shows the red frame being scaled with respect to different coordinate systems.
 The first is `scaledFrame(redFrame, [0.9 * (1 - t), 0.9 * (1 - t)])` while the second is `scaledFrame(redFrame, [0.9 * (1 - t), 0.9 * (1 - t)], greenFrame)` with respect to time `t`.
 
-![scaled self](https://github.com/mvarble/frames.js/blob/master/examples/scaled-self.gif)
-![scaled relative](https://github.com/mvarble/frames.js/blob/master/examples/scaled-relative.gif)
+![scaled self](https://raw.githubusercontent.com/mvarble/frames.js/master/examples/scaled-self.gif)
+![scaled relative](https://raw.githubusercontent.com/mvarble/frames.js/master/examples/scaled-relative.gif)
 
 
 ### Locations/Vectors in Different Frames
