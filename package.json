@@ -1,14 +1,11 @@
 {
   "name": "@mvarble/frames.js",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A set of tools for working with coordinate systems in the plane.",
   "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha --require @babel/register",
-    "build": "node webpack"
+    "build": "node build"
   },
   "repository": {
     "type": "git",
@@ -31,7 +28,7 @@
   "dependencies": {
     "lodash": "^4.17.15",
     "mathjs": "^6.2.5",
-    "unist-util-visit": "^2.0.1"
+    "unist-util-visit": "^2.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
@@ -44,7 +41,8 @@
     "chai-roughly": "^1.0.0",
     "gifencoder": "^2.0.1",
     "mocha": "^6.2.2",
-    "webpack": "^4.41.4",
+    "webpack": "^4.42.0",
+    "webpack-node-externals": "^1.7.2",
     "xstream": "^11.11.0"
   }
 }

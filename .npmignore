@@ -1,3 +1,5 @@
+.babelrc
 build.js
 test.js
 src
+examples
