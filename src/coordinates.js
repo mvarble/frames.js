@@ -7,6 +7,13 @@
 // module dependencies: project modules
 import math from './math';
 
+// the identity frame is that with the identity matrix as worldMatrix
+const identityFrame = {
+  type: 'frame',
+  worldMatrix: math.identity(3),
+};
+export { identityFrame };
+
 // prep* methods map between (js array) <-> (mathjs matrix)
 const prepLoc = arr => math.transpose(math.matrix([[...arr, 1]]));
 const prepLocs = arr => math.transpose(math.matrix(arr.map(a => [...a, 1])));

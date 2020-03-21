@@ -1,4 +1,5 @@
 import {
+  identityFrame,
   prepLoc,
   prepLocs,
   prepVec,
@@ -23,11 +24,6 @@ import {
   scaledFrame,
   withRatio,
 } from './transforms';
-
-const identityFrame = {
-  type: 'frame',
-  worldMatrix: [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
-};
 
 export {
   prepLoc,
