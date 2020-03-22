@@ -43,18 +43,23 @@ const entireTree = {
 ```
 
 Since our frames are encoded with simple JSON objects, the magic of the module is in the functions which parse/generate frames.
-**Every function exported by this module is pure**, as most of them are simple mathematical transformations.
+For transforming frames, we have an API for updating the frame's world matrix explicitly, providing affine transformations, or simply saying which basic (translate/rotate/scale) operation we want.
+Each such transformation has two froms; one which is a **pure** function which simply returns a new frame and an **impure** one that simply manipulates the `frame.worldMatrix` attribute.
+Below, transformation will be identified with its (pure/impure) function names.
+
+We can also perform coordinate calculations which allow one to get the coordinates of a location/vector in a particular frame's coordinate system, subject to having those from another frame's coordinate system.
+These functions are always pure, as there aren't many examples in which one would want otherwise.
 
 ## API
 
 Since this is a small package, one can look at the source code [here](https://github.com/mvarble/frames.js/blob/master/src.js).
 Otherwise, for the most part, there are only several functions which are very useful.
 
-### Rigid-Body Transformations
+### Transformations
 
 If one would like to return a translated/rotated/scaled version of a frame, it is as simple as using the following functions.
 
-#### translatedFrame
+#### translatedFrame/translateFrame
 
 ```js
 newFrame = translatedFrame(frame, disp [, relativeFrame])
@@ -68,7 +73,7 @@ The first is `translatedFrame(redFrame, [t*3, t*4])` while the second is `transl
 ![translated self](https://raw.githubusercontent.com/mvarble/frames.js/master/examples/translated-self.gif)
 ![translated relative](https://raw.githubusercontent.com/mvarble/frames.js/master/examples/translated-relative.gif)
 
-#### rotatedFrame
+#### rotatedFrame/rotateFrame
 
 ```js
 newFrame = rotatedFrame(frame, theta, [, relativeFrame])
@@ -83,7 +88,7 @@ The first is `rotatedFrame(redFrame, 2 * Math.PI * t)` while the second is `rota
 ![rotated relative](https://raw.githubusercontent.com/mvarble/frames.js/master/examples/rotated-relative.gif)
 
 
-#### scaledFrame
+#### scaledFrame/scaleFrame
 
 ```js
 newFrame = scaledFrame(frame, scales, [, relativeFrame])

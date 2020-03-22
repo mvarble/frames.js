@@ -18,6 +18,7 @@ import {
   locsFrameTrans,
   vecsFrameTrans,
   withWorldMatrix,
+  giveWorldMatrix,
   normalizedFrame,
   transformedByMatrix,
   translatedFrame,
@@ -314,6 +315,27 @@ describe('Frame', () => {
         expect(Math.round(ratio*100)/100).to.roughly(0.0001).equal(5.0);
       });
     });
+    describe('#giveWorldMatrix', () => {
+      it('should manipulate the frame so that it is identical to the output of `withWorldMatrix`', () => {
+        const frame = {
+          type: 'frame',
+          worldMatrix: math.matrix([[1, 0., 9], [0., 1, -6], [0, 0, 1]]),
+          data: {
+          },
+          children: [{
+            type: 'frame',
+            worldMatrix: math.matrix([[1, 1, 10], [-1, 1, -5], [0, 0, 1]]),
+            data: {
+            },
+            chilren: []
+          }]
+        };
+        const matrix = [[12, -12, 5], [12, 12, 13], [0, 0, 1]];
+        const transformed = withWorldMatrix(frame, matrix);
+        giveWorldMatrix(frame, matrix);
+        expect(superCleanedTree(frame)).to.roughly.deep.equal(superCleanedTree(transformed));
+      });
+    });
   });
 });
 
@@ -321,4 +343,15 @@ function cleanedTree(tree) {
   const treeCopy = cloneDeep(tree);
   if (treeCopy.worldMatrix) { treeCopy.worldMatrix = treeCopy.worldMatrix.valueOf(); }
   if (treeCopy.children) { treeCopy.children = treeCopy.children.map(cleanedTree); }
+}
+
+function superCleanedTree(tree) {
+  return {
+    worldMatrix: (
+      (tree.worldMatrix && tree.worldMatrix.valueOf) 
+        ? tree.worldMatrix.valueOf() 
+        : tree.worldMatrix
+    ),
+    children: tree.children ? tree.children.map(superCleanedTree) : [],
+  };
 }

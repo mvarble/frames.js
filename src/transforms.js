@@ -31,7 +31,7 @@ function multiplyMatrixStack(array) {
 }
 export { multiplyMatrixStack };
 
-// withChild will return a copy of a frame with a prepended new child.
+// withChild will return a (shallow) copy of a frame with a prepended new child.
 const withChild = (frame, child) => ({ 
   ...frame,
   children: [child, ...frame.children],
@@ -42,12 +42,12 @@ export { withChild };
 // has the provided matrix as its `worldMatrix`
 function withWorldMatrix(frame, matrix) {
   const newFrame = cloneDeep(frame);
-  const oldMatrix = newFrame.worldMatrix;
+  const oldMatrixInv = math.inv(newFrame.worldMatrix);
   visit(newFrame, (node, index, parent) => {
     if (parent && node.worldMatrix) {
-      parent.children[index].worldMatrix = multiplyMatrixStack([
+      node.worldMatrix = multiplyMatrixStack([
         node.worldMatrix,
-        math.inv(oldMatrix),
+        oldMatrixInv,
         matrix
       ]);
     }
@@ -55,10 +55,26 @@ function withWorldMatrix(frame, matrix) {
   newFrame.worldMatrix = matrix;
   return newFrame;
 }
-export { withWorldMatrix };
+
+function giveWorldMatrix(frame, matrix) {
+  const oldMatrixInv = math.inv(frame.worldMatrix);
+  visit(frame, (node, index, parent) => {
+    if (parent && node.worldMatrix) {
+      node.worldMatrix = multiplyMatrixStack([
+        node.worldMatrix,
+        oldMatrixInv,
+        matrix
+      ]);
+    }
+  });
+  frame.worldMatrix = matrix;
+  return frame;
+}
+
+export { withWorldMatrix, giveWorldMatrix };
 
 // apply the scaling of a frame so that its basis vectors are (2-norm) normal
-function normalizedFrame(frame) {
+function normalizedMatrix(frame) {
   const array = frame.worldMatrix.valueOf();
   const basis = [[array[0][0], array[1][0]], [array[0][1], array[1][1]]];
   const nBasis = basis.map(x => math.multiply(x, 1/math.norm(x)));
@@ -67,9 +83,15 @@ function normalizedFrame(frame) {
     [...nBasis[1], array[1][2]],
     [0, 0, 1]
   ]);
-  return withWorldMatrix(frame, matrix);
+  return matrix;
 }
-export { normalizedFrame };
+function normalizedFrame(frame) {
+  return withWorldMatrix(frame, normalizedMatrix(frame));
+}
+function normalizeFrame(frame) {
+  return giveWorldMatrix(frame, normalizedMatrix(frame));
+}
+export { normalizedFrame, normalizeFrame };
 
 // transform a frame by a matrix, relative to another
 function transformedByMatrix(frame, matrix, relFrame) {
@@ -87,7 +109,22 @@ function transformedByMatrix(frame, matrix, relFrame) {
     ]));
   }
 }
-export { transformedByMatrix };
+function transformWithMatrix(frame, matrix, relFrame) {
+  if (relFrame) {
+    return giveWorldMatrix(frame, multiplyMatrixStack([
+      frame.worldMatrix,
+      math.inv(relFrame.worldMatrix),
+      matrix,
+      relFrame.worldMatrix
+    ]));
+  } else {
+    return giveWorldMatrix(frame, multiplyMatrixStack([
+      matrix,
+      frame.worldMatrix
+    ]));
+  }
+}
+export { transformedByMatrix, transformWithMatrix };
 
 // translate a frame relative to another
 const translatedFrame = (frame, vecCoord, relFrame) => transformedByMatrix(
@@ -95,7 +132,12 @@ const translatedFrame = (frame, vecCoord, relFrame) => transformedByMatrix(
   math.matrix([[1, 0, vecCoord[0]], [0 , 1, vecCoord[1]], [0, 0, 1]]),
   relFrame
 );
-export { translatedFrame };
+const translateFrame = (frame, vecCoord, relFrame) => transformedWithMatrix(
+  frame,
+  math.matrix([[1, 0, vecCoord[0]], [0 , 1, vecCoord[1]], [0, 0, 1]]),
+  relFrame
+);
+export { translatedFrame, translateFrame };
 
 // rotate a frame relative to another
 const rotatedFrame = (frame, theta, relFrame) => transformedByMatrix(
@@ -107,7 +149,16 @@ const rotatedFrame = (frame, theta, relFrame) => transformedByMatrix(
   ]),
   relFrame
 );
-export { rotatedFrame };
+const rotateFrame = (frame, theta, relFrame) => transformWithMatrix(
+  frame,
+  math.matrix([
+    [math.cos(theta), -math.sin(theta), 0], 
+    [math.sin(theta), math.cos(theta), 0],
+    [0, 0, 1]
+  ]),
+  relFrame
+);
+export { rotatedFrame, rotateFrame };
 
 // scale a frame relative to another
 const scaledFrame = (frame, scales, relFrame) => transformedByMatrix(
@@ -115,20 +166,35 @@ const scaledFrame = (frame, scales, relFrame) => transformedByMatrix(
   math.matrix([[scales[0], 0, 0], [0, scales[1], 0], [0, 0, 1]]),
   relFrame
 );
-export { scaledFrame };
+const scaleFrame = (frame, scales, relFrame) => transformWithMatrix(
+  frame,
+  math.matrix([[scales[0], 0, 0], [0, scales[1], 0], [0, 0, 1]]),
+  relFrame
+);
+export { scaledFrame, scaleFrame };
 
 // scale a frame so that its ordered basis (v1, v2) satisfies:
 //   - ||v1||/||v2|| = ratio
 //   - det(v1 v2) = det(old_v1 old_v2)
-const withRatio = (frame, ratio) => {
+const ratioScale = (frame, ratio) => {
   const norms = math.transpose(frame.worldMatrix).valueOf().reduce(
     (arr, row, i) => (i == 2) ? arr : [...arr, math.norm(row.slice(0,2))],
     [],
   );
-  const gamma = math.pow(ratio * norms[1] / norms[0], 0.5)
+  return math.pow(ratio * norms[1] / norms[0], 0.5);
+}
+const withRatio = (frame, ratio) => {
+  const gamma = ratioScale(frame, ratio);
   return scaledFrame(
     frame,
     [gamma, 1/gamma]
   );
 };
-export { withRatio };
+const giveRatio = (frame, ratio) => {
+  const gamma = ratioScale(frame, ratio);
+  return scaleFrame(
+    frame,
+    [gamma, 1/gamma]
+  );
+}
+export { withRatio, giveRatio };
