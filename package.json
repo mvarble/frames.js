@@ -1,6 +1,6 @@
 {
   "name": "@mvarble/frames.js",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A set of tools for working with coordinate systems in the plane.",
   "main": "index.js",
   "scripts": {

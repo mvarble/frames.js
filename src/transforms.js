@@ -132,7 +132,7 @@ const translatedFrame = (frame, vecCoord, relFrame) => transformedByMatrix(
   math.matrix([[1, 0, vecCoord[0]], [0 , 1, vecCoord[1]], [0, 0, 1]]),
   relFrame
 );
-const translateFrame = (frame, vecCoord, relFrame) => transformedWithMatrix(
+const translateFrame = (frame, vecCoord, relFrame) => transformWithMatrix(
   frame,
   math.matrix([[1, 0, vecCoord[0]], [0 , 1, vecCoord[1]], [0, 0, 1]]),
   relFrame
