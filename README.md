@@ -12,7 +12,7 @@ npm install @mvarble/frames.js
 
 One can simply encode affine coordinate systems in the plane by 3x3 *frame* matrices.
 This way, calculations like rigid body transformations and coordinate transforms can be streamlined into simple matrix multiplication calculations.
-The purpose of this module is to wrap all such calculations into simple functions by utilizing the [mathjs](https://github.com/josdejong/mathjs) library.
+The purpose of this module is to wrap all such calculations into a simple API.
 
 ## The Code
 
@@ -23,22 +23,15 @@ It is then decided that the objects will behave like [unist](https://github.com/
 Consider the example below.
 
 ```js
-const pixelFrame = { type: 'frame', worldMatrix: math.identity(3) };
+const boxFrame = {
+  type: 'box',
+  worldMatrix: [[10, 0, 420], [0, -10, 69], [0, 0, 1]],
+};
 
 const planeFrame = {
   type: 'frame',
-  worldMatrix: math.matrix([[10, 0, 400], [0, -10, 400], [0, 0, 1]]),
-};
-
-const domFrame = { 
-  type: 'frame',
-  worldMatrix: math.matrix([[400, 0, 400], [0, -300, 300], [0, 0, 1]]),
-  children: [planeFrame],
-};
-
-const entireTree = {
-  type: 'root',
-  children: [pixelFrame, domFrame]
+  worldMatrix: [[10, 0, 400], [0, -10, 400], [0, 0, 1]],
+  children: [boxFrame],
 };
 ```
 
