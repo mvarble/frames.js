@@ -17,7 +17,7 @@ import math from './math';
 // simply allows a giant product of matrices
 function multiplyMatrixStack(array) {
   if (!array.length) {
-    return math.identity(3);
+    return math.identity();
   } else if (array.length == 1) {
     return array[0];
   } else if (array.length == 2) {
@@ -75,14 +75,17 @@ export { withWorldMatrix, giveWorldMatrix };
 
 // apply the scaling of a frame so that its basis vectors are (2-norm) normal
 function normalizedMatrix(frame) {
-  const array = frame.worldMatrix.valueOf();
+  const array = frame.worldMatrix;
   const basis = [[array[0][0], array[1][0]], [array[0][1], array[1][1]]];
-  const nBasis = basis.map(x => math.multiply(x, 1/math.norm(x)));
-  const matrix = math.matrix([
+  const nBasis = basis.map(x => { 
+    const N = math.norm(x);
+    return x.map(y => y / N);
+  });
+  const matrix = [
     [...nBasis[0], array[0][2]],
     [...nBasis[1], array[1][2]],
     [0, 0, 1]
-  ]);
+  ];
   return matrix;
 }
 function normalizedFrame(frame) {
@@ -129,12 +132,12 @@ export { transformedByMatrix, transformWithMatrix };
 // translate a frame relative to another
 const translatedFrame = (frame, vecCoord, relFrame) => transformedByMatrix(
   frame,
-  math.matrix([[1, 0, vecCoord[0]], [0 , 1, vecCoord[1]], [0, 0, 1]]),
+  [[1, 0, vecCoord[0]], [0 , 1, vecCoord[1]], [0, 0, 1]],
   relFrame
 );
 const translateFrame = (frame, vecCoord, relFrame) => transformWithMatrix(
   frame,
-  math.matrix([[1, 0, vecCoord[0]], [0 , 1, vecCoord[1]], [0, 0, 1]]),
+  [[1, 0, vecCoord[0]], [0 , 1, vecCoord[1]], [0, 0, 1]],
   relFrame
 );
 export { translatedFrame, translateFrame };
@@ -142,20 +145,20 @@ export { translatedFrame, translateFrame };
 // rotate a frame relative to another
 const rotatedFrame = (frame, theta, relFrame) => transformedByMatrix(
   frame,
-  math.matrix([
+  [
     [math.cos(theta), -math.sin(theta), 0], 
     [math.sin(theta), math.cos(theta), 0],
     [0, 0, 1]
-  ]),
+  ],
   relFrame
 );
 const rotateFrame = (frame, theta, relFrame) => transformWithMatrix(
   frame,
-  math.matrix([
+  [
     [math.cos(theta), -math.sin(theta), 0], 
     [math.sin(theta), math.cos(theta), 0],
     [0, 0, 1]
-  ]),
+  ],
   relFrame
 );
 export { rotatedFrame, rotateFrame };
@@ -163,12 +166,12 @@ export { rotatedFrame, rotateFrame };
 // scale a frame relative to another
 const scaledFrame = (frame, scales, relFrame) => transformedByMatrix(
   frame,
-  math.matrix([[scales[0], 0, 0], [0, scales[1], 0], [0, 0, 1]]),
+  [[scales[0], 0, 0], [0, scales[1], 0], [0, 0, 1]],
   relFrame
 );
 const scaleFrame = (frame, scales, relFrame) => transformWithMatrix(
   frame,
-  math.matrix([[scales[0], 0, 0], [0, scales[1], 0], [0, 0, 1]]),
+  [[scales[0], 0, 0], [0, scales[1], 0], [0, 0, 1]],
   relFrame
 );
 export { scaledFrame, scaleFrame };
@@ -177,7 +180,7 @@ export { scaledFrame, scaleFrame };
 //   - ||v1||/||v2|| = ratio
 //   - det(v1 v2) = det(old_v1 old_v2)
 const ratioScale = (frame, ratio) => {
-  const norms = math.transpose(frame.worldMatrix).valueOf().reduce(
+  const norms = math.transpose(frame.worldMatrix).reduce(
     (arr, row, i) => (i == 2) ? arr : [...arr, math.norm(row.slice(0,2))],
     [],
   );

@@ -1,4 +1,16 @@
 import {
+  identity,
+  transpose,
+  dot,
+  multiply,
+  inv,
+  pow,
+  sin,
+  cos,
+  norm,
+} from './math';
+
+import {
   identityFrame,
   prepLoc,
   prepLocs,
@@ -61,6 +73,15 @@ export {
   scaleFrame,
   withRatio,
   giveRatio,
+  identity,
+  transpose,
+  dot,
+  multiply,
+  inv,
+  pow,
+  sin,
+  cos,
+  norm,
 }
 
 export default {
@@ -92,4 +113,13 @@ export default {
   scaleFrame,
   withRatio,
   giveRatio,
+  identity,
+  transpose,
+  dot,
+  multiply,
+  inv,
+  pow,
+  sin,
+  cos,
+  norm,
 }

@@ -4,12 +4,15 @@
   "description": "A set of tools for working with coordinate systems in the plane.",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha --require @babel/register",
+    "test": "./node_modules/mocha/bin/mocha test.js",
     "build": "node build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mvarble/frames.js.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "keywords": [
     "coordinate",
@@ -27,22 +30,17 @@
   "homepage": "https://github.com/mvarble/frames.js#readme",
   "dependencies": {
     "lodash": "^4.17.15",
-    "mathjs": "^6.2.5",
     "unist-util-visit": "^2.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
-    "@babel/register": "^7.9.0",
-    "@cycle/run": "^5.4.0",
     "babel-loader": "^8.1.0",
-    "canvas": "^2.6.1",
     "chai": "^4.2.0",
     "chai-roughly": "^1.0.0",
-    "gifencoder": "^2.0.1",
+    "mathjs": "^6.2.5",
     "mocha": "^7.1.1",
     "webpack": "^4.42.0",
-    "webpack-node-externals": "^1.7.2",
-    "xstream": "^11.11.0"
+    "webpack-node-externals": "^1.7.2"
   }
 }

@@ -10,17 +10,17 @@ import math from './math';
 // the identity frame is that with the identity matrix as worldMatrix
 const identityFrame = {
   type: 'frame',
-  worldMatrix: math.identity(3),
+  worldMatrix: math.identity(),
 };
 export { identityFrame };
 
 // prep* methods map between (js array) <-> (mathjs matrix)
-const prepLoc = arr => math.transpose(math.matrix([[...arr, 1]]));
-const prepLocs = arr => math.transpose(math.matrix(arr.map(a => [...a, 1])));
-const prepVec = arr => math.transpose(math.matrix([[...arr, 0]]));
-const prepVecs = arr => math.transpose(math.matrix(arr.map(a => [...a, 0])));
-const prepArray = mat => math.transpose(mat).valueOf()[0].slice(0,-1);
-const prepArrays = mat => math.transpose(mat).valueOf().map(a => a.slice(0,-1));
+const prepLoc = arr => math.transpose([[...arr, 1]]);
+const prepLocs = arr => math.transpose(arr.map(a => [...a, 1]));
+const prepVec = arr => math.transpose([[...arr, 0]]);
+const prepVecs = arr => math.transpose(arr.map(a => [...a, 0]));
+const prepArray = mat => math.transpose(mat)[0].slice(0,-1);
+const prepArrays = mat => math.transpose(mat).map(a => a.slice(0,-1));
 export { prepLoc, prepLocs, prepVec, prepVecs, prepArray, prepArrays };
 
 // this will generate the matrix which transfers between frames
