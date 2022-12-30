@@ -36,7 +36,7 @@
     "chai": "^4.2.0",
     "chai-roughly": "^1.0.0",
     "mathjs": "^9.4.4",
-    "mocha": "^7.1.1",
+    "mocha": "^10.2.0",
     "webpack": "^5.50.0",
     "webpack-node-externals": "^1.7.2"
   }
